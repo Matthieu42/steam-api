@@ -5,6 +5,9 @@ import com.github.goive.steamapi.data.SteamApp;
 import com.github.goive.steamapi.data.SteamAppBuilder;
 import com.github.goive.steamapi.exceptions.SteamApiException;
 import com.github.goive.steamapi.utils.AppIdMatcherUtil;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
@@ -43,9 +46,12 @@ public class SteamApi {
         Map resultBodyMap;
 
         try {
-            URL src = new URL(API_URL + appId + "&cc=" + countryCode);
-            resultBodyMap = mapper.readValue(src, Map.class);
-        } catch (IOException e) {
+            HttpResponse<String> response = Unirest.get(API_URL + appId + "&cc=" + countryCode)
+                    .header("Cache-Control", "no-cache")
+                    .asString();
+
+            resultBodyMap = mapper.readValue(response.getBody(), Map.class);
+        } catch (IOException| UnirestException e) {
             throw new SteamApiException(e);
         }
 
