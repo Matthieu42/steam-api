@@ -1,4 +1,4 @@
-Java Steam API
+Java Steam API Updated and fixed
 =========
 
 [![Build Status](https://travis-ci.org/go-ive/steam-api.svg?branch=master)](https://travis-ci.org/go-ive/steam-api)&nbsp;
